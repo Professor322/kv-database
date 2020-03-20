@@ -4,4 +4,7 @@ project(db)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(db main.cpp)
+include_directories(jsoncpplib/includes)
+
+add_executable(db  server.cpp)
+target_link_libraries(db jsoncpplib/libjsoncpp.a)
