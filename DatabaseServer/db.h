@@ -8,6 +8,7 @@
 #include <json.h>
 #include <string>
 #include <unordered_map>
+#include <iostream>
 
 ///interface
 class DataBase {
@@ -16,10 +17,10 @@ private:
 public:
 	///constructor is going to upload data from log file
 	DataBase();
-	void post(const std::string& key, const Json::Value& val);
-	void put(const std::string& key, const Json::Value& val);
-	void get(const std::string& key) const;
-	void delete_elem(const std::string& key);
+	void postElem(const std::string& key, const Json::Value& val);
+	void putElem(const std::string& key, const Json::Value& val);
+	void getElem(const std::string& key) const;
+	void deleteElem(const std::string& key);
 	~DataBase();
 };
 
