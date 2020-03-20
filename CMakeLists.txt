@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(jsoncpplib/includes)
 
-add_executable(db  server.cpp)
-target_link_libraries(db jsoncpplib/libjsoncpp.a)
+add_executable(db DatabaseServer/main.cpp ./DatabaseServer/db.h)
+target_link_libraries(db ~/Desktop/kv-database/jsoncpplib/libjsoncpp.a)
