@@ -2,8 +2,7 @@
 // Created by professor on 20.03.20.
 //
 
-#ifndef DB_DB_H
-#define DB_DB_H
+#pragma once
 
 #include <json.h>
 #include <string>
@@ -24,4 +23,3 @@ public:
 	~DataBase();
 };
 
-#endif //DB_DB_H
