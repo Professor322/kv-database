@@ -4,17 +4,46 @@
 
 #include "query.h"
 
+///if syntax error throw exception
+std::string getDataContainer(std::istream& is) {
+
+}
+
+std::string getKey(std::istream& is) {
+
+}
+
+Json::Value getValue(std::istream& is) {
+
+}
+
+std::string getId(std::istream& is) {
+
+}
+
 std::istream& operator >> (std::istream& is, Query& q) {
 	std::string token;
 	is >> token;
 	if (token == "POST") {
 		q.type = QueryType::POST;
+		///get data_container
+		///get key
+		///get value
 	} else if (token == "PUT") {
 		q.type = QueryType::PUT;
+		///get data_container
+		///get key
+		///get value
 	} else if (token == "GET") {
 		q.type = QueryType::GET;
+		///get data_container
+		///get key
 	} else if (token == "DELETE") {
 		q.type = QueryType::DELETE;
+		///get data_container
+		///get key
+	} else {
+		///help
 	}
 	return is;
 }

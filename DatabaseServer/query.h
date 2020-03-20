@@ -3,7 +3,10 @@
 //
 #pragma once
 
-#include "db.h"
+#define TO_PARSE_KEY "key\\s*:\\s*\"[[:graph:]]+\""
+#define TO_PARSE_VAL "\"value\"\\s*:\\s*\\{.+(?=\\})"
+
+#include "data_container.h"
 
 enum class QueryType {
 	POST,
@@ -14,6 +17,7 @@ enum class QueryType {
 
 struct Query {
 	QueryType type;
+	std::string data_container;
 	std::string key;
 	Json::Value val;
 };
