@@ -6,25 +6,21 @@
 #include "data_container.h"
 #include "query.h"
 
-
-using namespace std;
+std::ostream& operator << (std::ostream& os, const Query& q) {
+	os << static_cast<int>(q.type) << std::endl;
+	os << q.data_container << std::endl;
+	os << q.key << std::endl;
+	os << q.val << std::endl;
+	return os;
+}
 
 int 	main() {
+	DataBase db;
 
-
-	string s = "kv/{id} body: {\"value\": {\"characters\": [{\"name\": \"Jabberwock\", \"chapter\":1}]} }";
-
-	regex a("/\\{[[:graph:]]+\\}\\s*(?=body:)");
-	smatch m;
-
-	regex_search(s, m, a);
-	cout << m[0] << endl;
-	/*while (regex_search(s, m, b)) {
-		for (const auto& i : m) {
-			cout << i << " ";
-		}
-		cout << endl;
-		s = m.suffix().str();
-	}*/
+	std::string buff;
+		getline(std::cin, buff);
+		std::stringstream ss(buff);
+		readQuery(ss, db.q);
+		std::cout << db.q << std::endl;
 	return 0;
 }

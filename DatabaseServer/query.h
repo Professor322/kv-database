@@ -33,4 +33,4 @@ struct Query {
 	Json::Value val;
 };
 
-std::istream& operator >> (std::istream& is, Query& q);
+void readQuery(std::stringstream& ss, Query& q) ;
