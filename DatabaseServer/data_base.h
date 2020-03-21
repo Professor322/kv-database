@@ -4,15 +4,20 @@
 
 #pragma once
 
+#include <json.h>
+#include <string>
+#include <unordered_map>
+#include <iostream>
+#include <regex>
+#include <sstream>
 #include "data_container.h"
-#include "query.h"
+#include "query_parser.h"
 
 class DataBase {
 private:
 	std::unordered_map<std::string, DataContainer> db;
 public:
 	Query q;
-
 
 	void postElem();
 	void putElem();

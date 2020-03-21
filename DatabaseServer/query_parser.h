@@ -1,9 +1,10 @@
 //
-// Created by professor on 20.03.20.
+// Created by professor on 21.03.20.
 //
+
 #pragma once
 
-///regex expressions for parsing
+#include "data_base.h"
 
 ///to parse POST query
 #define REG_POST_DATA_CONTAINER "/[[:graph:]]+\\s*(?=body:)"
@@ -16,8 +17,6 @@
 ///to parse GET and DELETE
 #define REG_DATA_CONTAINER "[[:graph:]]+(?=\\/)"
 #define REG_ID "/\\{[[:graph:]]+\\}"
-
-#include "data_container.h"
 
 enum class QueryType {
 	POST,
@@ -33,4 +32,10 @@ struct Query {
 	Json::Value val;
 };
 
-void readQuery(std::stringstream& ss, Query& q) ;
+std::string getDataContainer(const QueryType& type, const std::string& to_parse);
+std::string getID(const QueryType& type, const std::string& to_parse);
+std::string getKey(const QueryType& type, const std::string& to_parse);
+Json::Value getValue(const QueryType& type, const std::string& to_parse);
+std::smatch getRegex(const std::string& to_parse, const char* expression);
+
+void parseQuery(std::stringstream& ss, Query& q);

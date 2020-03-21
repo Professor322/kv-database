@@ -3,8 +3,7 @@
 //
 
 #include "data_base.h"
-#include "data_container.h"
-#include "query.h"
+
 
 std::ostream& operator << (std::ostream& os, const Query& q) {
 	os << static_cast<int>(q.type) << std::endl;
@@ -20,7 +19,7 @@ int 	main() {
 	std::string buff;
 	while(getline(std::cin, buff)) {
 		std::stringstream ss(buff);
-		readQuery(ss, db.q);
+		parseQuery(ss, db.q);
 		std::cout << db.q << std::endl;
 	}
 	return 0;
