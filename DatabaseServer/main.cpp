@@ -5,23 +5,26 @@
 #include "data_base.h"
 #include "data_container.h"
 #include "query.h"
-#include <regex>
+
 
 using namespace std;
 
 int 	main() {
 
 
-	string s = "/kv body: {key: \"test\", \"value\": {SOME ARBITRARY JSON} } ";
-	regex e("key\\s*:\\s*\"[[:graph:]]+\"");
+	string s = "kv/{id} body: {\"value\": {\"characters\": [{\"name\": \"Jabberwock\", \"chapter\":1}]} }";
 
-	regex b("\"value\"\\s*:\\s*\\{.+(?=\\})");
+	regex a("/\\{[[:graph:]]+\\}\\s*(?=body:)");
 	smatch m;
 
-
-	regex_search(s, m, b);
-
+	regex_search(s, m, a);
 	cout << m[0] << endl;
-
+	/*while (regex_search(s, m, b)) {
+		for (const auto& i : m) {
+			cout << i << " ";
+		}
+		cout << endl;
+		s = m.suffix().str();
+	}*/
 	return 0;
 }

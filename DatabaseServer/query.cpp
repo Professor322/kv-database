@@ -5,21 +5,7 @@
 #include "query.h"
 
 ///if syntax error throw exception
-std::string getDataContainer(std::istream& is) {
 
-}
-
-std::string getKey(std::istream& is) {
-
-}
-
-Json::Value getValue(std::istream& is) {
-
-}
-
-std::string getId(std::istream& is) {
-
-}
 
 std::istream& operator >> (std::istream& is, Query& q) {
 	std::string token;
