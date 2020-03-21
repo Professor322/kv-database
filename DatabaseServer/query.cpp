@@ -7,7 +7,7 @@
 #include <regex>
 
 ///if syntax error throw exception
-std::string commandPutDataContainer(const std::string& to_parse) {
+std::string commandPostDataContainer(const std::string& to_parse) {
 	if (to_parse.empty()) {
 		///throw exception
 	}
@@ -30,7 +30,7 @@ std::string commandPutDataContainer(const std::string& to_parse) {
 	return data_container;
 }
 
-std::string commandPutKey(const std::string& to_parse) {
+std::string commandPostKey(const std::string& to_parse) {
 	if (to_parse.empty()) {
 		///throw exception
 	}
@@ -49,7 +49,7 @@ std::string commandPutKey(const std::string& to_parse) {
 	return match[0].str().substr(begin, end - begin + 1);
 }
 
-Json::Value commandPutVal(const std::string& to_parse) {
+Json::Value commandPostVal(const std::string& to_parse) {
 	if (to_parse.empty()) {
 		///throw exception
 	}
@@ -75,6 +75,105 @@ Json::Value commandPutVal(const std::string& to_parse) {
 	return root;
 }
 
+std::string	commandPutDataContainer(const std::string& to_parse) {
+	if (to_parse.empty()) {
+		///throw exception
+	}
+
+	std::string data_container;
+	std::regex reg(REG_DATA_CONTAINER);
+	std::smatch match;
+
+	std::regex_search(to_parse, match, reg);
+
+	if (match.empty()) {
+		///throw exception
+	}
+	return match[0].str();
+}
+
+std::string	commandPutID(const std::string& to_parse) {
+	if (to_parse.empty()) {
+		///throw exception
+	}
+
+	std::regex reg(REG_PUT_ID);
+	std::smatch match;
+
+	std::regex_search(to_parse, match, reg);
+
+	if (match.empty()) {
+		///throw exception
+	}
+	size_t begin = match[0].str().find_first_of('{') + 1;
+	size_t end = match[0].str().find_last_of('}') - 1;
+
+	return match[0].str().substr(begin, end - begin + 1);
+}
+
+
+Json::Value	commandPutVal(const std::string& to_parse) {
+	if (to_parse.empty()) {
+		///throw exception
+	}
+
+	Json::Value root;
+	std::regex reg(REG_PUT_VALUE);
+	std::smatch match;
+
+	std::regex_search(to_parse, match, reg);
+
+	if (match.empty()) {
+		///throw exception
+	}
+
+	std::string temp = match[0].str();
+
+	temp.erase(temp.begin());
+	size_t begin = temp.find_first_of('{');
+	size_t end = temp.find_last_of('}');
+
+	std::istringstream is(temp.substr(begin, end - begin + 1));
+
+	is >> root;
+	return root;
+}
+
+std::string getDataContainer(const std::string& to_parse) {
+	if (to_parse.empty()) {
+		///throw exception
+	}
+
+	std::regex reg(REG_DATA_CONTAINER);
+	std::smatch match;
+
+	std::regex_search(to_parse, match, reg);
+
+	if (match.empty()) {
+		///throw exception
+	}
+	return match[0].str();
+}
+
+std::string getID(const std::string& to_parse) {
+	if (to_parse.empty()) {
+		///throw exception
+	}
+
+	std::regex reg(REG_ID);
+	std::smatch match;
+
+	std::regex_search(to_parse, match, reg);
+
+	if (match.empty()) {
+		///throw exception
+	}
+	size_t begin = match[0].str().find_first_of('{') + 1;
+	size_t end = match[0].str().find_last_of('}') - 1;
+
+	return match[0].str().substr(begin, end - begin + 1);
+}
+
 
 void readQuery(std::stringstream& ss, Query& q) {
 	std::string token;
@@ -85,22 +184,22 @@ void readQuery(std::stringstream& ss, Query& q) {
 
 	if (token == "POST") {
 		q.type = QueryType::POST;
-		q.data_container = commandPutDataContainer(to_parse);
-		q.key = commandPutKey(to_parse);
-		q.val = commandPutVal(to_parse);
+		q.data_container = commandPostDataContainer(to_parse);
+		q.key = commandPostKey(to_parse);
+		q.val = commandPostVal(to_parse);
 	} else if (token == "PUT") {
 		q.type = QueryType::PUT;
-		///get data_container
-		///get key
-		///get value
+		q.data_container = commandPutDataContainer(to_parse);
+		q.key = commandPutID(to_parse);
+		q.val = commandPutVal(to_parse);
 	} else if (token == "GET") {
 		q.type = QueryType::GET;
-		///get data_container
-		///get key
+		q.data_container = getDataContainer(to_parse);
+		q.key = getID(to_parse);
 	} else if (token == "DELETE") {
 		q.type = QueryType::DELETE;
-		///get data_container
-		///get key
+		q.data_container = getDataContainer(to_parse);
+		q.key = getID(to_parse);
 	} else {
 		///help
 	}

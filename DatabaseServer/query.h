@@ -11,7 +11,7 @@
 #define REG_POST_VALUE  "\"value\"\\s*:\\s*\\{.+\\}\\s*(?=\\})"
 
 ///to parse PUT
-#define REG_PUT_VALUE "\\{\\s*\"value\"\\s*:\\s*\\{.+\\}\\s(?=\\})"
+#define REG_PUT_VALUE "\\{\\s*\"value\"\\s*:\\s*\\{.+\\}\\s*(?=\\})"
 #define REG_PUT_ID "/\\{[[:graph:]]+\\}\\s*(?=body:)"
 ///to parse GET and DELETE
 #define REG_DATA_CONTAINER "[[:graph:]]+(?=\\/)"

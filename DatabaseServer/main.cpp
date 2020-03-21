@@ -18,9 +18,10 @@ int 	main() {
 	DataBase db;
 
 	std::string buff;
-		getline(std::cin, buff);
+	while(getline(std::cin, buff)) {
 		std::stringstream ss(buff);
 		readQuery(ss, db.q);
 		std::cout << db.q << std::endl;
+	}
 	return 0;
 }
