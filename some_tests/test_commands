@@ -1,4 +1,4 @@
 POST /kv body: {key: "test", "value" : { "key" : "value"}}
-PUT kv/{id} body: {"value": { "key" : "value"}}
-GET kv/{id}
-DELETE k/{dsadsa}
+PUT kv/{test} body: {"value": { "hey" : "cheln"}}
+GET kv/{test}
+DELETE kv/{dsadsa}
