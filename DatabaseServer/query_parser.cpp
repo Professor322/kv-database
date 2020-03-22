@@ -3,15 +3,13 @@
 //
 #include "data_base.h"
 
-std::smatch getRegex(const std::string& to_parse, const char *expression) {
+bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
 	if (to_parse.empty()) {
 		throw std::runtime_error("No command to parse");
 	}
 	std::regex reg(expression);
-	std::smatch match;
+	return regex_search(to_parse, match, reg);
 
-	std::regex_search(to_parse, match, reg);
-	return match;
 }
 
 std::string getDataContainer(const QueryType& type, const std::string& to_parse) {
@@ -19,17 +17,15 @@ std::string getDataContainer(const QueryType& type, const std::string& to_parse)
 	std::string data_container;
 
 	if (type == QueryType::POST) {
-		match = getRegex(to_parse, REG_POST_DATA_CONTAINER);
-		if (match.empty()) {
-			///throw exception
+		if (!getRegex(to_parse, match, REG_POST_DATA_CONTAINER)) {
+			throw std::runtime_error("Incorrect body: 404");
 		}
 		std::stringstream ss(match[0].str());
 		ss.get();
 		ss >> data_container;
 	} else {
-		match = getRegex(to_parse, REG_DATA_CONTAINER);
-		if (match.empty()) {
-			///throw exception
+		if (!getRegex(to_parse, match, REG_DATA_CONTAINER)) {
+			throw std::runtime_error("Incorrect body: 404");
 		}
 		data_container = match[0].str();
 	}
@@ -38,13 +34,14 @@ std::string getDataContainer(const QueryType& type, const std::string& to_parse)
 
 std::string getID(const QueryType& type, const std::string& to_parse) {
 	std::smatch match;
+	bool is_correct;
 	if (type == QueryType::PUT) {
-		match = getRegex(to_parse, REG_PUT_ID);
+		is_correct = getRegex(to_parse, match,REG_PUT_ID);
 	} else {
-		match = getRegex(to_parse, REG_ID);
+		is_correct = getRegex(to_parse, match,REG_ID);
 	}
-	if (match.empty()) {
-		throw std::runtime_error("Wrong syntax");
+	if (!is_correct) {
+		throw std::runtime_error("Incorrect ID syntax");
 	}
 	size_t begin = match[0].str().find_first_of('{') + 1;
 	size_t end = match[0].str().find_last_of('}') - 1;
@@ -52,11 +49,11 @@ std::string getID(const QueryType& type, const std::string& to_parse) {
 }
 
 std::string	getKey(const QueryType& type, const std::string& to_parse) {
-	std::smatch match = getRegex(to_parse, REG_POST_KEY);
-
-	if (match.empty()) {
-		///throw exception
+	std::smatch match;
+	if (!getRegex(to_parse, match, REG_POST_KEY)) {
+		throw std::runtime_error("Incorrect body: 400");
 	}
+
 	size_t begin = match[0].str().find_first_of('\"') + 1;
 	size_t end = match[0].str().find_last_of('\"') - 1;
 
@@ -67,15 +64,15 @@ Json::Value getValue(const QueryType& type, const std::string& to_parse) {
 	std::smatch match;
 	std::string to_stream;
 	Json::Value root;
+	bool is_correct;
 
 	if (type == QueryType::POST) {
-		match = getRegex(to_parse, REG_POST_VALUE);
+		is_correct = getRegex(to_parse, match, REG_POST_VALUE);
 	} else if (type == QueryType::PUT) {
-		match = getRegex(to_parse, REG_PUT_VALUE);
-
+		is_correct = getRegex(to_parse, match, REG_PUT_VALUE);
 	}
-	if (match.empty()) {
-		///throw exception
+	if (!is_correct) {
+		throw std:: runtime_error("Incorrect body: 400");
 	}
 	to_stream = match[0].str();
 
@@ -87,6 +84,10 @@ Json::Value getValue(const QueryType& type, const std::string& to_parse) {
 
 	std::istringstream is(to_stream.substr(begin, end - begin + 1));
 
-	is >> root;
+	try {
+		is >> root;
+	} catch (const std::exception& e){
+		throw std::runtime_error("Incorrect body: 400");
+	}
 	return root;
 }
