@@ -7,8 +7,10 @@
 
 static void parsePostAndGet(const std::string& to_parse, Query& q) {
 	q.data_container = getDataContainer(q.type, to_parse);
+
 	q.key = q.type == QueryType ::POST ?
 			getKey(q.type, to_parse) : getID(q.type, to_parse);
+
 	q.val = getValue(q.type, to_parse);
 }
 
@@ -42,4 +44,5 @@ void parseQuery(std::stringstream& ss, Query& q) {
 	} else {
 		q.type = QueryType::HELP;
 	}
+	///log is happening
 }

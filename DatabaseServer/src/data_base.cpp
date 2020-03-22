@@ -4,6 +4,21 @@
 
 #include "../includes/data_base.h"
 
+DataBase::DataBase(const char *log_filname) {
+	logs.open(log_filname, std::ios_base::in | std::ios_base::out | std::ios_base::app);
+
+	without_log = true;
+	if (logs.is_open()) {
+		while (logs >> *this)
+			;
+	}
+	without_log = false;
+}
+
+DataBase::~DataBase() {
+	logs.close();
+}
+
 std::istream& operator >> (std::istream& is, DataBase& db) {
 	std::string buff;
 
@@ -35,6 +50,12 @@ std::istream& operator >> (std::istream& is, DataBase& db) {
 	} catch (const std::runtime_error& r) {
 		std::cerr << r.what() << std::endl;
 	}
+	if ((q.type == QueryType::POST ||
+		q.type == QueryType::PUT ||
+		q.type == QueryType::POST) &&
+		!db.getWithoutLog()) {
+		db.logCommand(buff);
+	}
 	return is;
 }
 
@@ -44,6 +65,14 @@ void DataBase::setCurrentQuery(const QueryType& type) {
 
 QueryType DataBase::getCurrentQuery() const {
 	return this->current_query;
+}
+
+bool DataBase::getWithoutLog() const {
+	return this->without_log;
+}
+
+void DataBase::logCommand(const std::string &command) {
+	this->logs << command;
 }
 
 void DataBase::postElem(const Query& q) {
@@ -72,3 +101,4 @@ void DataBase::deleteElem(const Query& q) {
 void DataBase::help() {
 	std::cout << "Vi tolko derzhites`" << std::endl;
 }
+

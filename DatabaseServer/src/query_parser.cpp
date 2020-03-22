@@ -3,7 +3,7 @@
 //
 #include "../includes/data_base.h"
 
-bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
+static bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
 	if (to_parse.empty()) {
 		throw std::runtime_error("No command to parse");
 	}

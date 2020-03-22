@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <regex>
+#include <fstream>
 #include <sstream>
 #include "data_container.h"
 #include "query_parser.h"
@@ -16,17 +17,21 @@
 class DataBase {
 private:
 	std::unordered_map<std::string, DataContainer> db;
+	std::fstream logs;
+	bool without_log;
 	QueryType  current_query;
 public:
-	DataBase(){}
+	explicit DataBase(const char* log_filname);
 	void help();
 	void postElem(const Query& q);
 	void putElem(const Query& q);
 	void getElem(const Query& q) const;
 	void deleteElem(const Query& q);
 	void setCurrentQuery(const QueryType& type);
+	void logCommand(const std::string& command);
 	QueryType getCurrentQuery() const;
-	~DataBase() {}
+	bool 	  getWithoutLog() const;
+	~DataBase();
 };
 
 std::istream& operator >> (std::istream& is, DataBase& db);
