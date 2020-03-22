@@ -18,11 +18,9 @@ class DataBase {
 private:
 	std::unordered_map<std::string, DataContainer> db;
 public:
-	Query q;
-
 	void help();
-	void postElem();
-	void putElem();
-	void getElem() const;
-	void deleteElem();
+	void postElem(const Query& q);
+	void putElem(const Query& q);
+	void getElem(const Query& q) const;
+	void deleteElem(const Query& q);
 };

@@ -4,22 +4,22 @@
 
 #include "data_base.h"
 
-void DataBase::postElem() {
+void DataBase::postElem(const Query& q) {
 	db[q.data_container].postElem(q.key, q.val);
 }
 
-void DataBase::putElem() {
+void DataBase::putElem(const Query& q) {
 	db[q.data_container].putElem(q.key, q.val);
 }
 
-void DataBase::getElem() const {
+void DataBase::getElem(const Query& q) const {
 	if (!db.count(q.data_container)) {
 		///throw exception 404
 	}
 	db.at(q.data_container).getElem(q.key);
 }
 
-void DataBase::deleteElem() {
+void DataBase::deleteElem(const Query& q) {
 	if (!db.count(q.data_container)) {
 		///throw exception 404
 	}

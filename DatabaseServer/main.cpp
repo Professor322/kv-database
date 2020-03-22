@@ -19,20 +19,21 @@ int 	main() {
 	std::string buff;
 	while (getline(std::cin, buff)) {
 		std::stringstream ss(buff);
+		Query q;
 		try {
-			parseQuery(ss, db.q);
-			switch (db.q.type) {
+			parseQuery(ss, q);
+			switch (q.type) {
 				case QueryType::POST:
-					db.postElem();
+					db.postElem(q);
 					break;
 				case QueryType::PUT:
-					db.putElem();
+					db.putElem(q);
 					break;
 				case QueryType::GET:
-					db.getElem();
+					db.getElem(q);
 					break;
 				case QueryType::DELETE:
-					db.deleteElem();
+					db.deleteElem(q);
 					break;
 				case QueryType::QUIT:
 					return 0;
