@@ -2,7 +2,7 @@
 // Created by professor on 20.03.20.
 //
 
-#include "data_base.h"
+#include "../includes/data_base.h"
 
 
 static void parsePostAndGet(const std::string& to_parse, Query& q) {

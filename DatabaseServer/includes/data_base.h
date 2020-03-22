@@ -10,7 +10,6 @@
 #include <iostream>
 #include <regex>
 #include <sstream>
-#include <limits>
 #include "data_container.h"
 #include "query_parser.h"
 
@@ -18,9 +17,13 @@ class DataBase {
 private:
 	std::unordered_map<std::string, DataContainer> db;
 public:
+	DataBase(){}
 	void help();
 	void postElem(const Query& q);
 	void putElem(const Query& q);
 	void getElem(const Query& q) const;
 	void deleteElem(const Query& q);
+	~DataBase() {}
 };
+
+std::istream& operator >> (std::istream& is, DataBase& db);

@@ -2,7 +2,7 @@
 // Created by professor on 20.03.20.
 //
 
-#include "data_base.h"
+#include "../includes/data_base.h"
 
 ///methods going to throw exception if something invalid happens
 
@@ -26,7 +26,6 @@ void DataContainer::getElem(const std::string &key) const {
 	}
 	std::cout << "key : " << key
 	          << " value: " << dc.at(key) << std::endl;
-	std::cout << std::endl;
 }
 
 void DataContainer::deleteElem(const std::string &key) {
