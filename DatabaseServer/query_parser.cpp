@@ -5,7 +5,7 @@
 
 std::smatch getRegex(const std::string& to_parse, const char *expression) {
 	if (to_parse.empty()) {
-		///throw expression
+		throw std::runtime_error("No command to parse");
 	}
 	std::regex reg(expression);
 	std::smatch match;
@@ -44,7 +44,7 @@ std::string getID(const QueryType& type, const std::string& to_parse) {
 		match = getRegex(to_parse, REG_ID);
 	}
 	if (match.empty()) {
-		///throw exception
+		throw std::runtime_error("Wrong syntax");
 	}
 	size_t begin = match[0].str().find_first_of('{') + 1;
 	size_t end = match[0].str().find_last_of('}') - 1;

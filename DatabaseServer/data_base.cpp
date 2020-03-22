@@ -26,3 +26,7 @@ void DataBase::deleteElem() {
 	db[q.data_container].deleteElem(q.key);
 
 }
+
+void DataBase::help() {
+	std::cout << "Vi tolko derzhites`" << std::endl;
+}

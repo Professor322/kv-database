@@ -10,6 +10,7 @@
 #include <iostream>
 #include <regex>
 #include <sstream>
+#include <limits>
 #include "data_container.h"
 #include "query_parser.h"
 
@@ -19,6 +20,7 @@ private:
 public:
 	Query q;
 
+	void help();
 	void postElem();
 	void putElem();
 	void getElem() const;

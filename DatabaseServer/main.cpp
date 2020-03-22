@@ -17,10 +17,33 @@ int 	main() {
 	DataBase db;
 
 	std::string buff;
-	while(getline(std::cin, buff)) {
+	while (getline(std::cin, buff)) {
 		std::stringstream ss(buff);
-		parseQuery(ss, db.q);
-		std::cout << db.q << std::endl;
+		try {
+			parseQuery(ss, db.q);
+			switch (db.q.type) {
+				case QueryType::POST:
+					db.postElem();
+					break;
+				case QueryType::PUT:
+					db.putElem();
+					break;
+				case QueryType::GET:
+					db.getElem();
+					break;
+				case QueryType::DELETE:
+					db.deleteElem();
+					break;
+				case QueryType::QUIT:
+					return 0;
+				case QueryType ::HELP:
+					db.help();
+					break;
+			}
+		} catch (const std::runtime_error& r) {
+			std::cerr << r.what() << std::endl;
+		}
 	}
+
 	return 0;
 }

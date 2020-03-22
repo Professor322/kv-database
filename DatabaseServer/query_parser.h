@@ -22,7 +22,9 @@ enum class QueryType {
 	POST,
 	PUT,
 	GET,
-	DELETE
+	DELETE,
+	HELP,
+	QUIT
 };
 
 struct Query {
