@@ -5,13 +5,15 @@
 #include "../includes/data_base.h"
 
 DataBase::DataBase(const char *log_filname) {
-	logs.open(log_filname, std::ios_base::in | std::ios_base::out | std::ios_base::app);
-
-	without_log = true;
+	logs.open(log_filname);
 	if (logs.is_open()) {
-		while (logs >> *this)
-			;
+		without_log = true;
+		if (logs.is_open()) {
+			while (logs >> *this);
+		}
+		logs.close();
 	}
+	logs.open(log_filname, std::ios_base::app);
 	without_log = false;
 }
 
@@ -23,6 +25,9 @@ std::istream& operator >> (std::istream& is, DataBase& db) {
 	std::string buff;
 
 	getline(is, buff);
+	if (buff.empty()) {
+		return is;
+	}
 	std::stringstream ss(buff);
 	Query q;
 	try {
@@ -72,7 +77,7 @@ bool DataBase::getWithoutLog() const {
 }
 
 void DataBase::logCommand(const std::string &command) {
-	this->logs << command;
+	this->logs << command << std::endl;
 }
 
 void DataBase::postElem(const Query& q) {

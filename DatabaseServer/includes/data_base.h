@@ -14,6 +14,8 @@
 #include "data_container.h"
 #include "query_parser.h"
 
+#define LOG_FILE "./logs/log.txt"
+
 class DataBase {
 private:
 	std::unordered_map<std::string, DataContainer> db;

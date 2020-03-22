@@ -24,8 +24,8 @@ void testRegexReturnValue() {
 
 }
 
-int 	main() {
-	DataBase db;
+int 	main(int argc, char *argv[]) {
+	DataBase db(LOG_FILE);
 
 	while (std::cin >> db) {
 		if (db.getCurrentQuery() == QueryType::QUIT) {
