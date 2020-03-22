@@ -1,8 +1,10 @@
 
 ///correct input
 POST /kv body: {key: "test", "value" : { "key" : "value"}}
+POST /kv body: {key: "new_val", "value" : { "key" : "value"}}
 PUT kv/{test} body: {"value": { "hey" : "cheln"}}
 GET kv/{test}
+GET kv/{new_val}
 DELETE kv/{dsadsa}
 
                     ///incorrect body
