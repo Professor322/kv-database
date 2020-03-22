@@ -16,6 +16,7 @@
 class DataBase {
 private:
 	std::unordered_map<std::string, DataContainer> db;
+	QueryType  current_query;
 public:
 	DataBase(){}
 	void help();
@@ -23,6 +24,8 @@ public:
 	void putElem(const Query& q);
 	void getElem(const Query& q) const;
 	void deleteElem(const Query& q);
+	void setCurrentQuery(const QueryType& type);
+	QueryType getCurrentQuery() const;
 	~DataBase() {}
 };
 

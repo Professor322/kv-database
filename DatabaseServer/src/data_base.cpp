@@ -12,6 +12,7 @@ std::istream& operator >> (std::istream& is, DataBase& db) {
 	Query q;
 	try {
 		parseQuery(ss, q);
+		db.setCurrentQuery(q.type);
 		switch (q.type) {
 			case QueryType::POST:
 				db.postElem(q);
@@ -35,6 +36,14 @@ std::istream& operator >> (std::istream& is, DataBase& db) {
 		std::cerr << r.what() << std::endl;
 	}
 	return is;
+}
+
+void DataBase::setCurrentQuery(const QueryType& type) {
+	this->current_query = type;
+}
+
+QueryType DataBase::getCurrentQuery() const {
+	return this->current_query;
 }
 
 void DataBase::postElem(const Query& q) {

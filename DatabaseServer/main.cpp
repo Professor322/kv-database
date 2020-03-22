@@ -28,7 +28,10 @@ int 	main() {
 	DataBase db;
 
 	while (std::cin >> db) {
-
+		if (db.getCurrentQuery() == QueryType::QUIT) {
+			break;
+		}
 	}
+
 	return 0;
 }
