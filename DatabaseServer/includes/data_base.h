@@ -11,6 +11,11 @@
 #include <regex>
 #include <fstream>
 #include <sstream>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
+#include "server.h"
 #include "data_container.h"
 #include "query_parser.h"
 

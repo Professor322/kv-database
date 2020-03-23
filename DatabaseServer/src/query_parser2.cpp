@@ -44,5 +44,4 @@ void parseQuery(std::stringstream& ss, Query& q) {
 	} else {
 		q.type = QueryType::HELP;
 	}
-	///log is happening
 }
