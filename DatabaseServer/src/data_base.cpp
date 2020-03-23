@@ -70,7 +70,7 @@ void DataBase::setCurrentAnswer(const std::string &answer) {
 }
 
 std::string DataBase::getCurrentAnswer() const {
-	return this->current_answer;
+	return this->current_answer + '\n';
 }
 
 void DataBase::setCurrentQuery(const QueryType& type) {
@@ -113,6 +113,6 @@ void DataBase::deleteElem(const Query& q) {
 }
 
 void DataBase::help() {
-	this->current_answer =  "Vi tolko derzhites`\n";
+	this->current_answer =  "Vi tolko derzhites";
 }
 

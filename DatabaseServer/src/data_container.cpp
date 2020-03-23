@@ -24,10 +24,7 @@ std::string DataContainer::getElem(const std::string &key) const {
 	if (!dc.count(key)) {
 		throw std::runtime_error("No such key: 404");
 	}
-	///second
-	std::cout << "key : " << key
-	          << " value: " << dc.at(key) << std::endl;
-	return "sdfkjdskj";
+	return "key : " + key + " value: " + dc.at(key).toStyledString();
 }
 
 void DataContainer::deleteElem(const std::string &key) {

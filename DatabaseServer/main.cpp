@@ -31,22 +31,12 @@ int 	main(int argc, char *argv[]) {
 	while (true) {
 		std::string request;
 
-		request = server.recieveRequest();
-
+		request = server.receiveRequest();
 		std::stringstream ss(request);
 
 		ss >> db;
-
 		server.sendAnswer(db.getCurrentAnswer());
-		server.closeClientSocket();
+		db.setCurrentAnswer("");
 	}
-/*	DataBase db(LOG_FILE);
-
-	while (std::cin >> db) {
-		if (db.getCurrentQuery() == QueryType::QUIT) {
-			break;
-		}
-	}*/
-
 	return 0;
 }

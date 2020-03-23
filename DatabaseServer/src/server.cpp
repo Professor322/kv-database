@@ -27,20 +27,20 @@ Server::Server(const char *address, const int &port, const int& queue_size) {
 	inet_aton(address, &this->ip);
 
 	///htonl host to network long
-	this->server_address.sin_addr.s_addr = htonl(this->ip.s_addr);
+	this->server_address.sin_addr.s_addr = this->ip.s_addr;
 
 	/**bind ip to the socket**/
-	if (bind(this->serverfd, (sockaddr*)&this->server_address, sizeof(this->server_address))) {
+	if (bind(this->serverfd, (sockaddr*)&this->server_address, sizeof(this->server_address)) == -1) {
 		throw std::runtime_error("Binding failed");
 	}
 
 	/**start listening**/
+
 	listen(this->serverfd, this->queue_size);
+	this->clientfd = accept(this->serverfd, nullptr, nullptr);
 }
 
-std::string 	Server::recieveRequest() {
-	this->clientfd = accept(this->serverfd, nullptr, nullptr);
-
+std::string 	Server::receiveRequest() {
 	if (this->clientfd == -1) {
 		throw std::runtime_error("Client acception error");
 	}
@@ -52,11 +52,15 @@ std::string 	Server::recieveRequest() {
 	///no flags that is why 4th argument is set to 0
 	while ((size = recv(this->clientfd, &buff, BUFF_SIZE, 0)) > 0) {
 		request.append(buff, size);
+		if (request.find('\n') !=  std::string::npos) {
+			break ;
+		}
 	}
 	return request;
 }
 
 void Server::sendAnswer(const std::string& answer) {
+
 	send(this->clientfd, answer.c_str(), answer.size(), 0);
 }
 

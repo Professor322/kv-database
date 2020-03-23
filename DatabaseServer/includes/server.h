@@ -6,7 +6,7 @@
 
 #include "data_base.h"
 
-#define BUFF_SIZE 256
+#define BUFF_SIZE 3
 
 class Server {
 private:
@@ -15,8 +15,8 @@ private:
 	sockaddr_in server_address;
 public:
 	explicit	Server(const char* address, const int& port, const int& queue_size = 1);
-	std::string	recieveRequest();
+	std::string	receiveRequest();
 	void 		sendAnswer(const std::string& answer);
 	void 		closeClientSocket();
-	~Server();
+	~Server() {}
 };
