@@ -14,6 +14,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 #include "server.h"
 #include "data_container.h"
@@ -27,17 +28,20 @@ private:
 	std::fstream logs;
 	bool without_log;
 	QueryType  current_query;
+	std::string current_answer;
 public:
-	explicit DataBase(const char* log_filname);
-	void help();
-	void postElem(const Query& q);
-	void putElem(const Query& q);
-	void getElem(const Query& q) const;
-	void deleteElem(const Query& q);
-	void setCurrentQuery(const QueryType& type);
-	void logCommand(const std::string& command);
-	QueryType getCurrentQuery() const;
-	bool 	  getWithoutLog() const;
+	explicit 		DataBase(const char* log_filname);
+	void			help();
+	void 			postElem(const Query& q);
+	void 			putElem(const Query& q);
+	void 			getElem(const Query& q);
+	void 			deleteElem(const Query& q);
+	void 			logCommand(const std::string& command);
+	void 			setCurrentAnswer(const std::string& answer);
+	std::string		getCurrentAnswer() const;
+	void 			setCurrentQuery(const QueryType& type);
+	QueryType 		getCurrentQuery() const;
+	bool 	  		getWithoutLog() const;
 	~DataBase();
 };
 

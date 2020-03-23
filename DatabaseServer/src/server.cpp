@@ -38,8 +38,28 @@ Server::Server(const char *address, const int &port, const int& queue_size) {
 	listen(this->serverfd, this->queue_size);
 }
 
-void 	Server::recieveRequest() {
+std::string 	Server::recieveRequest() {
 	this->clientfd = accept(this->serverfd, nullptr, nullptr);
 
+	if (this->clientfd == -1) {
+		throw std::runtime_error("Client acception error");
+	}
+	int size;
+	char buff[BUFF_SIZE];
 
+	std::string request;
+
+	///no flags that is why 4th argument is set to 0
+	while ((size = recv(this->clientfd, &buff, BUFF_SIZE, 0)) > 0) {
+		request.append(buff, size);
+	}
+	return request;
+}
+
+void Server::sendAnswer(const std::string& answer) {
+	send(this->clientfd, answer.c_str(), answer.size(), 0);
+}
+
+void Server::closeClientSocket() {
+	close(this->clientfd);
 }

@@ -25,13 +25,17 @@ void testRegexReturnValue() {
 }
 
 int 	main(int argc, char *argv[]) {
-	DataBase db(LOG_FILE);
+	Server server(argv[1], atoi(argv[2]), 1);
+
+
+
+/*	DataBase db(LOG_FILE);
 
 	while (std::cin >> db) {
 		if (db.getCurrentQuery() == QueryType::QUIT) {
 			break;
 		}
-	}
+	}*/
 
 	return 0;
 }

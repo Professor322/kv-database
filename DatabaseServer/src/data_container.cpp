@@ -20,12 +20,14 @@ void DataContainer::putElem(const std::string &key, const Json::Value &val) {
 	dc[key] = val;
 }
 
-void DataContainer::getElem(const std::string &key) const {
+std::string DataContainer::getElem(const std::string &key) const {
 	if (!dc.count(key)) {
 		throw std::runtime_error("No such key: 404");
 	}
+	///second
 	std::cout << "key : " << key
 	          << " value: " << dc.at(key) << std::endl;
+	return "sdfkjdskj";
 }
 
 void DataContainer::deleteElem(const std::string &key) {

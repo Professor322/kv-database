@@ -32,6 +32,7 @@ std::istream& operator >> (std::istream& is, DataBase& db) {
 	Query q;
 	try {
 		parseQuery(ss, q);
+		db.setCurrentAnswer("");
 		db.setCurrentQuery(q.type);
 		switch (q.type) {
 			case QueryType::POST:
@@ -52,16 +53,24 @@ std::istream& operator >> (std::istream& is, DataBase& db) {
 				db.help();
 				break;
 		}
+		if ((q.type == QueryType::POST ||
+			 q.type == QueryType::PUT ||
+			 q.type == QueryType::POST) &&
+			!db.getWithoutLog()) {
+			db.logCommand(buff);
+		}
 	} catch (const std::runtime_error& r) {
-		std::cerr << r.what() << std::endl;
-	}
-	if ((q.type == QueryType::POST ||
-		q.type == QueryType::PUT ||
-		q.type == QueryType::POST) &&
-		!db.getWithoutLog()) {
-		db.logCommand(buff);
+		db.setCurrentAnswer(r.what());
 	}
 	return is;
+}
+
+void DataBase::setCurrentAnswer(const std::string &answer) {
+	this->current_answer = answer;
+}
+
+std::string DataBase::getCurrentAnswer() const {
+	return this->current_answer;
 }
 
 void DataBase::setCurrentQuery(const QueryType& type) {
@@ -88,11 +97,11 @@ void DataBase::putElem(const Query& q) {
 	db[q.data_container].putElem(q.key, q.val);
 }
 
-void DataBase::getElem(const Query& q) const {
+void DataBase::getElem(const Query& q)  {
 	if (!db.count(q.data_container)) {
 		throw std::runtime_error("No such Data Container: 404");
 	}
-	db.at(q.data_container).getElem(q.key);
+	this->current_answer = db.at(q.data_container).getElem(q.key);
 }
 
 void DataBase::deleteElem(const Query& q) {
@@ -104,6 +113,6 @@ void DataBase::deleteElem(const Query& q) {
 }
 
 void DataBase::help() {
-	std::cout << "Vi tolko derzhites`" << std::endl;
+	this->current_answer =  "Vi tolko derzhites`\n";
 }
 
