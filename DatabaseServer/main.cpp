@@ -26,9 +26,20 @@ void testRegexReturnValue() {
 
 int 	main(int argc, char *argv[]) {
 	Server server(argv[1], atoi(argv[2]), 1);
+	DataBase db(LOG_FILE);
 
+	while (true) {
+		std::string request;
 
+		request = server.recieveRequest();
 
+		std::stringstream ss(request);
+
+		ss >> db;
+
+		server.sendAnswer(db.getCurrentAnswer());
+		server.closeClientSocket();
+	}
 /*	DataBase db(LOG_FILE);
 
 	while (std::cin >> db) {

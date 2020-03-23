@@ -14,9 +14,9 @@ private:
 	in_addr ip;
 	sockaddr_in server_address;
 public:
-	explicit Server(const char* address, const int& port, const int& queue_size = 1);
+	explicit	Server(const char* address, const int& port, const int& queue_size = 1);
 	std::string	recieveRequest();
-	void 	sendAnswer(const std::string& answer);
-	void 	closeClientSocket();
+	void 		sendAnswer(const std::string& answer);
+	void 		closeClientSocket();
 	~Server();
 };
