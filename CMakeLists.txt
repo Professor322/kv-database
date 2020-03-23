@@ -12,5 +12,5 @@ add_executable(db DatabaseServer/main.cpp
         DatabaseServer/src/query_parser2.cpp
         DatabaseServer/src/data_base.cpp
         DatabaseServer/includes/data_base.h
-        DatabaseServer/includes/query_parser.h DatabaseServer/src/query_parser.cpp)
+        DatabaseServer/includes/query_parser.h DatabaseServer/src/query_parser.cpp DatabaseServer/includes/server.h DatabaseServer/src/server.cpp)
 target_link_libraries(db ~/Desktop/kv-database/jsoncpplib/libjsoncpp.a)
