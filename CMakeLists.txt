@@ -1,16 +1,15 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.7)
+project(main)
 
-project(db)
+list(APPEND CMAKE_PREFIX_PATH
+        "/home/professor/Desktop/vcpkg/packages/cpprestsdk_x64-linux/share/cpprestsdk")
 
-set(CMAKE_CXX_STANDARD 17)
+find_package(cpprestsdk CONFIG REQUIRED)
 
-include_directories(jsoncpplib/includes)
 
-add_executable(db DatabaseServer/main.cpp
-        DatabaseServer/includes/data_container.h
-        DatabaseServer/src/data_container.cpp
-        DatabaseServer/src/query_parser2.cpp
-        DatabaseServer/src/data_base.cpp
-        DatabaseServer/includes/data_base.h
-        DatabaseServer/includes/query_parser.h DatabaseServer/src/query_parser.cpp DatabaseServer/includes/server.h DatabaseServer/src/server.cpp)
-target_link_libraries(db ~/Desktop/kv-database/jsoncpplib/libjsoncpp.a)
+add_executable(main ./new_version/some_tests/testing_networklib.cpp)
+
+target_link_libraries(main PRIVATE cpprestsdk::cpprest
+    cpprestsdk::cpprestsdk_zlib_internal
+       cpprestsdk::cpprestsdk_boost_internal
+        cpprestsdk::cpprestsdk_openssl_internal)
