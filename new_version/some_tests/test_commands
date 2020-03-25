@@ -1,0 +1,11 @@
+POST kv/ HTTP/1.1
+
+{key: "test", "value": {"key" : "value"}}
+
+PUT kv/{id} HTTP/1.1
+
+{"value": {"privet" : "poka"}}
+
+GET kv/{id} HTTP/1.1
+
+DELETE kv/{id} HTTP/1.1
