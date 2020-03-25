@@ -107,7 +107,8 @@ std::istream& operator>>(std::istream& is, http_response_parser& response) {
 	getline(is, buff);
 	///body
 	buff.clear();
-	copy(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>(), std::back_inserter(val));
+	copy(std::istreambuf_iterator<char>(is),
+	        std::istreambuf_iterator<char>(), std::back_inserter(val));
 	response.setBody(buff);
 	return is;
 }
