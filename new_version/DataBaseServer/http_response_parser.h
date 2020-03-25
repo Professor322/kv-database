@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 
 enum StatusCodes {
 	OK = 200,
@@ -17,8 +18,8 @@ struct Status {
 	StatusCodes status;
 
 	Status(){}
-	Status(const std::string status);
-	std::string to_String();
+	Status(const std::string& status);
+	std::string to_String() const;
 };
 
 class http_response_parser {
