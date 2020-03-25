@@ -2,7 +2,7 @@
 // Created by professor on 25.03.20.
 //
 
-#include "http_request_parser.h"
+#include "../http_request_parser.h"
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 #include <iostream>
@@ -24,18 +24,18 @@ int 	main() {
 	ip::tcp::socket sock(service);
 
 	/** connecting  to endpoint **/
-	sock.connect(ep);
+//	sock.connect(ep);
 
 	/** sending http request **/
 	char buff[256];
 
 	std::cin >> req;
+	std::cout << req.to_String() << std::endl;
+//	write(sock, buffer(req.to_String()));
 
-	write(sock, buffer(req.to_String()));
-
-	size_t len = sock.read_some(buffer(buff));
-	std::string msg(buff, len);
-	std::cout <<  msg << std::endl;
+//	size_t len = sock.read_some(buffer(buff));
+//	std::string msg(buff, len);
+//	std::cout <<  msg << std::endl;
 
 	return 0;
 }

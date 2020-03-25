@@ -51,3 +51,5 @@ public:
 	std::string to_String() const;
 	~http_response_parser(){}
 };
+
+std::istream& operator>>(std::istream& is, http_response_parser& response);

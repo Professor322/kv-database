@@ -43,12 +43,33 @@ http_request_parser::http_request_parser(const Requests &method, const std::stri
 }
 
 
+http_request_parser::http_request_parser(std::istream& is) {
+	std::string buff;
+
+	is >> buff;
+	this->method = Methods(buff);
+
+	is >> buff;
+	this->uri = buff;
+
+	Requests method = this->method.request;
+	if (method == POST || method == PUT) {
+		///skip 'body:'
+		is >> buff;
+
+		std::string body;
+		getline(is, body);
+
+		this->body = body;
+	}
+}
+
 std::string http_request_parser::to_String() const{
 	std::stringstream http_req;
 
 	http_req << this->method.to_String() << " " << this->uri << " HTTP/1.1\r\n";
-	http_req << std::endl;
-	http_req << this->body;
+	http_req << "\r\n";
+	http_req << this->body << "\r\n";
 	return http_req.str();
 }
 
@@ -72,22 +93,28 @@ std::istream& operator >> (std::istream& is, http_request_parser& req) {
 
 	std::string buff;
 
-	is >> buff;
-	req.setMethod(Methods(buff));
+	getline(is, buff);
 
-	is >> buff;
-	req.setUri(buff);
+	std::stringstream ss(buff);
+	std::string val;
 
-	Requests method = req.getMethod();
-	if (method == POST || method == PUT) {
-		///skip 'body:'
-		is >> buff;
+	ss >> val;
+	req.setMethod(Methods(val));
 
-		std::string body;
-		getline(is, body);
+	ss >> val;
+	req.setUri(val);
 
-		req.setBody(body);
+	///skip HTTP/1.1
+	ss >> val;
+
+	Requests request = req.getMethod();
+
+	if (request == POST || request == PUT) {
+		///skip blank line
+		getline(is, buff);
+
+		getline(is, buff);
+		req.setBody(buff);
 	}
-
 	return is;
 }

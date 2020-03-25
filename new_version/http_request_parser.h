@@ -30,6 +30,7 @@ private:
 	std::string body;
 public:
 	http_request_parser() {}
+	http_request_parser(std::istream& is);
 	http_request_parser(const Requests& method);
 	http_request_parser(const Requests& method, const std::string& uri);
 	void setMethod(const Methods& method);

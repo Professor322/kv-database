@@ -35,6 +35,10 @@ http_response_parser::http_response_parser(const Status &status, const std::stri
 	this->body = body;
 }
 
+void http_response_parser::setBody(const std::string &body) {
+	this->body = body;
+}
+
 std::string http_response_parser::getBody() const {
 	return this->body;
 }
@@ -69,8 +73,41 @@ std::string http_response_parser::to_String() const {
 	std::stringstream response;
 
 	response << "HTTP/1.1 " << this->status.to_String() << " " << this->reason_phrase + "\r\n";
-	response << header << "\r\n\r\n";
+	//response << header << "\r\n\r\n";
+	response << "\r\n";
 	response << body << "\r\n";
 
 	return response.str();
+}
+
+std::istream& operator>>(std::istream& is, http_response_parser& response) {
+
+	std::string buff;
+
+	getline(is, buff);
+
+	std::stringstream ss(buff);
+
+	///skip HTTP/1.1
+	ss >> buff;
+
+	///status
+	ss >> buff;
+	Status status(buff);
+	response.setStatus(status);
+
+	///reason phrase
+	std::string val;
+	buff.clear();
+	while (ss >> val)
+		buff += val;
+	response.setReasonPhrase(buff);
+
+	///skip new line
+	getline(is, buff);
+	///body
+	buff.clear();
+	copy(std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>(), std::back_inserter(val));
+	response.setBody(buff);
+	return is;
 }

@@ -19,8 +19,12 @@ void client_session(socket_ptr socket) {
 			char data[256];
 
 			size_t len = socket->read_some(buffer(data));
-			if (len > 0)
+			if (len > 0) {
 				write(*socket, buffer("OK\nsup\n", 7));
+				std::string request(data, len);
+
+				std::cout << request << std::endl;
+			}
 		} catch (boost::system::system_error& e) {
 			break ;
 		}
