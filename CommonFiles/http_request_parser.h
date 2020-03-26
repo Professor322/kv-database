@@ -8,6 +8,8 @@
 #include <sstream>
 #include <fstream>
 
+#define BUFFER_SIZE 1024
+
 enum Requests {
 	POST,
 	PUT,

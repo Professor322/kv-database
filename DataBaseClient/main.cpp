@@ -4,8 +4,6 @@
 
 using namespace boost::asio;
 
-enum { max_length = 1024 };
-
 int main(int argc, char* argv[])
 {
 	try
@@ -21,19 +19,18 @@ int main(int argc, char* argv[])
 
 			s.connect(ep);
 
-			///create request
-
 			http_request_parser request(std::cin);
+			std::cout << request.to_String() << std::endl;
 
 			boost::asio::write(s, boost::asio::buffer(request.to_String(), request.to_String().size()));
 
-			char reply[max_length];
+			char reply[BUFFER_SIZE];
 
 			boost::system::error_code error;
 			size_t reply_length = s.read_some(boost::asio::buffer(reply), error);
 			std::string response(reply, reply_length);
-
 			std::cout << response << std::endl;
+
 			s.close();
 		}
 	}

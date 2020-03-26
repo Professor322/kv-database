@@ -28,5 +28,5 @@ std::string DataBase::getElem(const std::string &key) const {
 	if (!this->db.count(key)) {
 		throw std::runtime_error(NO_KEY_MSG);
 	}
-	return "key: " + key + "value: " + this->db.at(key).toStyledString();
+	return "key: " + key + ", value: " + this->db.at(key).toStyledString();
 }

@@ -3,7 +3,7 @@
 //
 #include "data_base.h"
 #include "data_base_query.h"
-
+#include <iostream>
 
 static bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
 	if (to_parse.empty()) {
@@ -49,14 +49,14 @@ void parsePut(const std::string& uri, const std::string& body, DataBaseQuery& q)
 	std::string to_parse;
 
 	if (!getRegex(uri, match, REG_PUT_GET_DELETE_KEY))
-		throw std::runtime_error("Incorrect_uri");
+		throw std::runtime_error(INCOR_URI_MSG);
 
 	to_parse = match[0].str();
 	q.key = findSubstr(to_parse,
 			to_parse.find_first_of('{') + 1,
 			to_parse.find_last_of('}') - 1);
 
-	if (!getRegex(uri, match, REG_POST_PUT_VALUE))
+	if (!getRegex(body, match, REG_POST_PUT_VALUE))
 		throw std::runtime_error(INCOR_BODY_MSG);
 
 	to_parse = match[0].str();
@@ -78,7 +78,7 @@ void parseGetandDelete(const std::string& uri, DataBaseQuery& q) {
 	std::string to_parse;
 
 	if (!getRegex(uri, match, REG_PUT_GET_DELETE_KEY))
-		throw std::runtime_error(INCOR_BODY_MSG);
+		throw std::runtime_error(INCOR_URI_MSG);
 
 	to_parse = match[0].str();
 	q.key = findSubstr(to_parse,
@@ -99,7 +99,7 @@ std::istream& operator>>(std::istream& is, DataBaseQuery& q) {
 		case PUT:  parsePut(q.request.getUri(), q.request.getBody(), q); break;
 		case GET:  parseGetandDelete(q.request.getUri(), q); break;
 		case DELETE: parseGetandDelete(q.request.getUri(), q); break;
-		default: throw std::runtime_error("Incorrect request");
+		default: throw std::runtime_error(INCOR_REQ_MSG);
 	}
 	return is;
 }

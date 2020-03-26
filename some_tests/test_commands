@@ -1,9 +1,9 @@
 POST kv/ body: {key: "test", "value": {"key" : "value"}}
 
-PUT kv/{id} HTTP/1.1
+GET kv/{test}
 
-{"value": {"privet" : "poka"}}
+PUT kv/{test} body: {"value": {"privet" : "poka"}}
 
-GET kv/{id} HTTP/1.1
+GET kv/{test}
 
-DELETE kv/{id} HTTP/1.1
+DELETE kv/{id}

@@ -7,11 +7,12 @@
 #include <string>
 #include <sstream>
 
-#define OK_MSG "200 OK"
-#define KEY_EXISTS_MSG "409 KEY_EXISTS"
-#define NO_KEY_MSG "404 NO_KEY"
-#define INCOR_BODY_MSG "400 INCORRECT_BODY"
-#define INCOR_REQ_MSG "400 INCORRECT_REQUEST"
+#define OK_MSG "200 OK "
+#define KEY_EXISTS_MSG "409 KEY_EXISTS "
+#define NO_KEY_MSG "404 NO_KEY "
+#define INCOR_BODY_MSG "400 INCORRECT_BODY "
+#define INCOR_REQ_MSG "400 INCORRECT_REQUEST "
+#define INCOR_URI_MSG "400 INCORRECT_URI "
 
 enum StatusCodes {
 	OK = 200,
