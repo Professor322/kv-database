@@ -37,6 +37,8 @@ public:
 	Requests getMethod() const;
 	void setUri(const std::string& uri);
 	void setBody(const std::string& body);
+	std::string getBody() const;
+	std::string getUri() const;
 	http_request_parser(const Requests& method, const std::string& uri, const std::string& body);
 	std::string to_String() const;
 	~http_request_parser() {}

@@ -28,7 +28,7 @@ void parsePost(const std::string&body, DataBaseQuery& q) {
 			to_parse.find_first_of('\"') + 1,
 			to_parse.find_last_of('\"') - 1);
 
-	if (!getRegex(body, match, REG_POST_VALUE))
+	if (!getRegex(body, match, REG_POST_PUT_VALUE))
 		throw std::runtime_error("Incorrect body");
 
 	to_parse = match[0].str();
@@ -44,10 +44,45 @@ void parsePost(const std::string&body, DataBaseQuery& q) {
 }
 
 void parsePut(const std::string& uri, const std::string& body, DataBaseQuery& q) {
+	std::smatch match;
+	std::string to_parse;
+
+	if (!getRegex(uri, match, REG_PUT_GET_DELETE_KEY))
+		throw std::runtime_error("Incorrect uri");
+
+	to_parse = match[0].str();
+	q.key = findSubstr(to_parse,
+			to_parse.find_first_of('{') + 1,
+			to_parse.find_last_of('}') - 1);
+
+	if (!getRegex(uri, match, REG_POST_PUT_VALUE))
+		throw std::runtime_error("Incorrect body");
+
+	to_parse = match[0].str();
+	std::istringstream is(findSubstr(to_parse,
+									 to_parse.find_first_of('{'),
+									 to_parse.find_last_of('}')));
+
+	try {
+		is >> q.value;
+	} catch (const std::exception& e) {
+		throw std::runtime_error("Incorrect body");
+	}
+
 
 }
 
 void parseGetandDelete(const std::string& uri, DataBaseQuery& q) {
+	std::smatch match;
+	std::string to_parse;
+
+	if (!getRegex(uri, match, REG_PUT_GET_DELETE_KEY))
+		throw std::runtime_error("Incorrect uri");
+
+	to_parse = match[0].str();
+	q.key = findSubstr(to_parse,
+					   to_parse.find_first_of('{') + 1,
+					   to_parse.find_last_of('}') - 1);
 
 }
 
@@ -60,7 +95,10 @@ std::istream& operator>>(std::istream& is, DataBaseQuery& q) {
 
 	switch (request_type) {
 		case POST: parsePost(q.request.getBody(), q); break;
-		case PUT:
+		case PUT:  parsePut(q.request.getUri(), q.request.getBody(), q); break;
+		case GET:  parseGetandDelete(q.request.getUri(), q); break;
+		case DELETE: parseGetandDelete(q.request.getUri(), q); break;
+		default: throw std::runtime_error("Unknown request");
 	}
 	return is;
 }

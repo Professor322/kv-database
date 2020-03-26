@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(server)
+project(database_client_server)
 
 list(APPEND CMAKE_PREFIX_PATH
         "/home/professor/Desktop/vcpkg/packages/cpprestsdk_x64-linux/share/cpprestsdk")
@@ -7,9 +7,18 @@ list(APPEND CMAKE_PREFIX_PATH
 find_package(cpprestsdk CONFIG REQUIRED)
 
 
-add_executable(server DataBaseServer/main.cpp http_response_parser.h http_response_parser.cpp)
-add_executable(client DataBaseClient/main.cpp new_version//http_request_parser.h http_request_parser.cpp)
+include_directories(./jsoncpplib/includes)
 
+add_executable(server DataBaseServer/main.cpp
+        http_response_parser.h
+        http_response_parser.cpp
+        http_request_parser.h
+        http_request_parser.cpp
+        DataBaseServer/data_base.h
+        DataBaseServer/data_base.cpp
+        DataBaseServer/data_base_query.cpp DataBaseServer/data_base_query.h)
+
+add_executable(client DataBaseClient/main.cpp http_request_parser.h http_request_parser.cpp)
 
 target_link_libraries(server PRIVATE cpprestsdk::cpprest
     cpprestsdk::cpprestsdk_zlib_internal

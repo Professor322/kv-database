@@ -89,6 +89,14 @@ Requests http_request_parser::getMethod() const {
 	return this->method.request;
 }
 
+std::string http_request_parser::getBody() const {
+	return this->body;
+}
+
+std::string http_request_parser::getUri() const {
+	return this->uri;
+}
+
 std::istream& operator >> (std::istream& is, http_request_parser& req) {
 
 	std::string buff;
