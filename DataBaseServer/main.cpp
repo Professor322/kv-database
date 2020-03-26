@@ -16,10 +16,6 @@ using std::cout;
 using std::endl;
 using std::string;
 
-void proccess_request(const string& request) {
-	
-}
-
 void session(socket_ptr sock)
 {
 	try
@@ -35,8 +31,8 @@ void session(socket_ptr sock)
 			cout << "Finished reading\n";
 
 			string msg(data, length);
-			
-			
+
+
 
 			if (error == boost::asio::error::eof) {
 				cout << "End of session\n\n";
@@ -44,7 +40,7 @@ void session(socket_ptr sock)
 			}
 			else if (error)
 				throw boost::system::system_error(error); // Some other error.
-			
+
 			boost::asio::write(*sock, boost::asio::buffer(msg, msg.size()));
 			cout << "Response is sent\n";
 		}
@@ -72,7 +68,6 @@ int main(int argc, char* argv[])
 	{
 		boost::asio::io_service io_service;
 
-		using namespace std; // For atoi.
 		server(io_service, 8001);
 	}
 	catch (std::exception& e)
