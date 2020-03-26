@@ -1,20 +1,22 @@
 
 
-#include <cstdlib>
 #include <iostream>
 #include <boost/bind.hpp>
 #include <boost/smart_ptr.hpp>
 #include <boost/asio.hpp>
 #include <boost/thread/thread.hpp>
+#include "data_base.h"
 
 using namespace boost::asio;
-
-const int max_length = 1024;
-
-typedef boost::shared_ptr<ip::tcp::socket> socket_ptr;
 using std::cout;
 using std::endl;
 using std::string;
+
+typedef boost::shared_ptr<ip::tcp::socket> socket_ptr;
+
+const int max_length = 1024;
+DataBase db;
+
 
 void session(socket_ptr sock)
 {
@@ -30,10 +32,6 @@ void session(socket_ptr sock)
 			size_t length = sock->read_some(boost::asio::buffer(data), error);
 			cout << "Finished reading\n";
 
-			string msg(data, length);
-
-
-
 			if (error == boost::asio::error::eof) {
 				cout << "End of session\n\n";
 				break; // Connection closed cleanly by peer.
@@ -41,7 +39,14 @@ void session(socket_ptr sock)
 			else if (error)
 				throw boost::system::system_error(error); // Some other error.
 
-			boost::asio::write(*sock, boost::asio::buffer(msg, msg.size()));
+			DataBaseQuery q;
+			string request(data, length);
+			std::stringstream ss(request);
+			ss >> q;
+
+			cout << q.request.getMethod() << q.key << " " << q.value << endl;
+
+			boost::asio::write(*sock, boost::asio::buffer(request, request.size()));
 			cout << "Response is sent\n";
 		}
 	}
@@ -66,8 +71,8 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-		boost::asio::io_service io_service;
 
+		boost::asio::io_service io_service;
 		server(io_service, 8001);
 	}
 	catch (std::exception& e)

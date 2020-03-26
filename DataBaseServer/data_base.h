@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <string>
 #include <json.h>
+#include "data_base_query.h"
 
 class DataBase {
 private:

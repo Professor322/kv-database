@@ -98,7 +98,6 @@ std::istream& operator>>(std::istream& is, DataBaseQuery& q) {
 		case PUT:  parsePut(q.request.getUri(), q.request.getBody(), q); break;
 		case GET:  parseGetandDelete(q.request.getUri(), q); break;
 		case DELETE: parseGetandDelete(q.request.getUri(), q); break;
-		default: throw std::runtime_error("Unknown request");
 	}
 	return is;
 }
