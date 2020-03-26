@@ -6,7 +6,7 @@
 
 #include "data_base.h"
 #include <regex>
-#include "../http_request_parser.h"
+#include "../CommonFiles/http_request_parser.h"
 
 ///to parse POST query
 #define REG_POST_KEY "\\{\\s*key\\s*:\\s*\"[[:graph:]]+\","
@@ -22,3 +22,4 @@ struct DataBaseQuery {
 };
 
 std::istream& operator>>(std::istream& is, DataBaseQuery& q);
+std::string handle_request(const std::string& request);

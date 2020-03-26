@@ -17,7 +17,6 @@ typedef boost::shared_ptr<ip::tcp::socket> socket_ptr;
 const int max_length = 1024;
 DataBase db;
 
-
 void session(socket_ptr sock)
 {
 	try
@@ -34,19 +33,15 @@ void session(socket_ptr sock)
 
 			if (error == boost::asio::error::eof) {
 				cout << "End of session\n\n";
-				break; // Connection closed cleanly by peer.
+				break;
 			}
 			else if (error)
-				throw boost::system::system_error(error); // Some other error.
+				throw boost::system::system_error(error);
 
-			DataBaseQuery q;
 			string request(data, length);
-			std::stringstream ss(request);
-			ss >> q;
+			string response = handle_request(request);
 
-			cout << q.request.getMethod() << q.key << " " << q.value << endl;
-
-			boost::asio::write(*sock, boost::asio::buffer(request, request.size()));
+			boost::asio::write(*sock, boost::asio::buffer(response, response.size()));
 			cout << "Response is sent\n";
 		}
 	}

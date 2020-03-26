@@ -10,15 +10,15 @@ find_package(cpprestsdk CONFIG REQUIRED)
 include_directories(./jsoncpplib/includes)
 
 add_executable(server DataBaseServer/main.cpp
-        http_response_parser.h
-        http_response_parser.cpp
-        http_request_parser.h
-        http_request_parser.cpp
+        CommonFiles/http_response_parser.h
+        CommonFiles/http_response_parser.cpp
+        CommonFiles/http_request_parser.h
+        CommonFiles/http_request_parser.cpp
         DataBaseServer/data_base.h
         DataBaseServer/data_base.cpp
-        DataBaseServer/data_base_query.cpp DataBaseServer/data_base_query.h)
+        DataBaseServer/data_base_query.cpp DataBaseServer/data_base_query.h DataBaseServer/handle_request.cpp)
 
-add_executable(client DataBaseClient/main.cpp http_request_parser.h http_request_parser.cpp)
+add_executable(client DataBaseClient/main.cpp CommonFiles/http_request_parser.h CommonFiles/http_request_parser.cpp)
 
 target_link_libraries(server PRIVATE cpprestsdk::cpprest
     cpprestsdk::cpprestsdk_zlib_internal

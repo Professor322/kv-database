@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <string>
 #include <json.h>
+#include "../CommonFiles/http_request_parser.h"
+#include "../CommonFiles/http_response_parser.h"
 #include "data_base_query.h"
 
 class DataBase {
@@ -21,3 +23,5 @@ public:
 	~DataBase() {}
 
 };
+
+extern DataBase db;

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../http_request_parser.h"
+#include "../CommonFiles/http_request_parser.h"
 #include <boost/asio.hpp>
 
 using namespace boost::asio;
@@ -23,9 +23,8 @@ int main(int argc, char* argv[])
 
 			///create request
 
-			http_request_parser request;
+			http_request_parser request(std::cin);
 
-			std::cin >> request;
 			boost::asio::write(s, boost::asio::buffer(request.to_String(), request.to_String().size()));
 
 			char reply[max_length];
@@ -34,7 +33,7 @@ int main(int argc, char* argv[])
 			size_t reply_length = s.read_some(boost::asio::buffer(reply), error);
 			std::string response(reply, reply_length);
 
-			std::cout << "Response is: " << response << std::endl;
+			std::cout << response << std::endl;
 			s.close();
 		}
 	}

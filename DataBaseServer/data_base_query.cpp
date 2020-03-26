@@ -1,12 +1,13 @@
 //
 // Created by professor on 26.03.20.
 //
+#include "data_base.h"
 #include "data_base_query.h"
 
 
 static bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
 	if (to_parse.empty()) {
-		throw std::runtime_error("No command to parse");
+		throw std::runtime_error(INCOR_REQ_MSG);
 	}
 	std::regex reg(expression);
 	return regex_search(to_parse, match, reg);
@@ -21,7 +22,7 @@ void parsePost(const std::string&body, DataBaseQuery& q) {
 	std::string to_parse;
 
 	if (!getRegex(body, match, REG_POST_KEY))
-		throw std::runtime_error("Incorrect body");
+		throw std::runtime_error(INCOR_BODY_MSG);
 
 	to_parse = match[0].str();
 	q.key = findSubstr(to_parse,
@@ -29,7 +30,7 @@ void parsePost(const std::string&body, DataBaseQuery& q) {
 			to_parse.find_last_of('\"') - 1);
 
 	if (!getRegex(body, match, REG_POST_PUT_VALUE))
-		throw std::runtime_error("Incorrect body");
+		throw std::runtime_error(INCOR_BODY_MSG);
 
 	to_parse = match[0].str();
 	std::istringstream is(findSubstr(to_parse,
@@ -39,7 +40,7 @@ void parsePost(const std::string&body, DataBaseQuery& q) {
 	try {
 		is >> q.value;
 	} catch (const std::exception& e) {
-		throw std::runtime_error("Incorrect body");
+		throw std::runtime_error(INCOR_BODY_MSG);
 	}
 }
 
@@ -48,7 +49,7 @@ void parsePut(const std::string& uri, const std::string& body, DataBaseQuery& q)
 	std::string to_parse;
 
 	if (!getRegex(uri, match, REG_PUT_GET_DELETE_KEY))
-		throw std::runtime_error("Incorrect uri");
+		throw std::runtime_error("Incorrect_uri");
 
 	to_parse = match[0].str();
 	q.key = findSubstr(to_parse,
@@ -56,7 +57,7 @@ void parsePut(const std::string& uri, const std::string& body, DataBaseQuery& q)
 			to_parse.find_last_of('}') - 1);
 
 	if (!getRegex(uri, match, REG_POST_PUT_VALUE))
-		throw std::runtime_error("Incorrect body");
+		throw std::runtime_error(INCOR_BODY_MSG);
 
 	to_parse = match[0].str();
 	std::istringstream is(findSubstr(to_parse,
@@ -66,7 +67,7 @@ void parsePut(const std::string& uri, const std::string& body, DataBaseQuery& q)
 	try {
 		is >> q.value;
 	} catch (const std::exception& e) {
-		throw std::runtime_error("Incorrect body");
+		throw std::runtime_error(INCOR_BODY_MSG);
 	}
 
 
@@ -77,7 +78,7 @@ void parseGetandDelete(const std::string& uri, DataBaseQuery& q) {
 	std::string to_parse;
 
 	if (!getRegex(uri, match, REG_PUT_GET_DELETE_KEY))
-		throw std::runtime_error("Incorrect uri");
+		throw std::runtime_error(INCOR_BODY_MSG);
 
 	to_parse = match[0].str();
 	q.key = findSubstr(to_parse,
@@ -98,6 +99,7 @@ std::istream& operator>>(std::istream& is, DataBaseQuery& q) {
 		case PUT:  parsePut(q.request.getUri(), q.request.getBody(), q); break;
 		case GET:  parseGetandDelete(q.request.getUri(), q); break;
 		case DELETE: parseGetandDelete(q.request.getUri(), q); break;
+		default: throw std::runtime_error("Incorrect request");
 	}
 	return is;
 }
