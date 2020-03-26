@@ -14,9 +14,9 @@ add_executable(server DataBaseServer/main.cpp
         CommonFiles/http_response_parser.cpp
         CommonFiles/http_request_parser.h
         CommonFiles/http_request_parser.cpp
-        DataBaseServer/data_base.h
-        DataBaseServer/data_base.cpp
-        DataBaseServer/data_base_query.cpp DataBaseServer/data_base_query.h DataBaseServer/handle_request.cpp)
+        DataBaseServer/include/data_base.h
+        DataBaseServer/src/data_base.cpp
+        DataBaseServer/src/data_base_query.cpp DataBaseServer/include/data_base_query.h DataBaseServer/src/handle_request.cpp)
 
 add_executable(client DataBaseClient/main.cpp CommonFiles/http_request_parser.h CommonFiles/http_request_parser.cpp)
 

@@ -5,7 +5,7 @@
 #include <boost/smart_ptr.hpp>
 #include <boost/asio.hpp>
 #include <boost/thread/thread.hpp>
-#include "data_base.h"
+#include "include/data_base.h"
 
 using namespace boost::asio;
 using std::cout;
@@ -14,8 +14,7 @@ using std::string;
 
 typedef boost::shared_ptr<ip::tcp::socket> socket_ptr;
 
-const int max_length = 1024;
-DataBase db;
+DataBase db(LOG_FILENAME);
 
 void session(socket_ptr sock)
 {
@@ -24,7 +23,7 @@ void session(socket_ptr sock)
 		cout << "Starting client session\n";
 		for (;;)
 		{
-			char data[max_length];
+			char data[BUFFER_SIZE];
 
 			boost::system::error_code error;
 			cout  << "Reading request...\n";

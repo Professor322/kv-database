@@ -7,20 +7,25 @@
 #include <unordered_map>
 #include <string>
 #include <json.h>
-#include "../CommonFiles/http_request_parser.h"
-#include "../CommonFiles/http_response_parser.h"
+#include <fstream>
+#include "../../CommonFiles/http_request_parser.h"
+#include "../../CommonFiles/http_response_parser.h"
 #include "data_base_query.h"
+
+#define LOG_FILENAME "./DataBaseServer/logs/logs.txt"
 
 class DataBase {
 private:
 	std::unordered_map<std::string, Json::Value> db;
+	std::fstream log;
 public:
-	DataBase() {}
+	explicit DataBase(const std::string& log_filename);
 	void addElem(const std::string& key, const Json::Value& val);
 	void changeElem(const std::string& key, const Json::Value& val);
 	std::string getElem(const std::string& key) const;
 	void deleteElem(const std::string& key);
-	~DataBase() {}
+	void logCommand(const std::string& command, const std::string& arg);
+	~DataBase();
 
 };
 

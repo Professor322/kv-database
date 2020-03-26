@@ -85,8 +85,8 @@ void http_request_parser::setBody(const std::string &body) {
 	this->body = body;
 }
 
-Requests http_request_parser::getMethod() const {
-	return this->method.request;
+Methods http_request_parser::getMethod() const {
+	return this->method;
 }
 
 std::string http_request_parser::getBody() const {
@@ -115,9 +115,9 @@ std::istream& operator >> (std::istream& is, http_request_parser& req) {
 	///skip HTTP/1.1
 	ss >> val;
 
-	Requests request = req.getMethod();
+	Methods request = req.getMethod();
 
-	if (request == POST || request == PUT) {
+	if (request.request == POST || request.request == PUT) {
 		///skip blank line
 		getline(is, buff);
 

@@ -1,8 +1,8 @@
 //
 // Created by professor on 26.03.20.
 //
-#include "data_base.h"
-#include "data_base_query.h"
+#include "../include/data_base.h"
+#include "../include/data_base_query.h"
 #include <iostream>
 
 static bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
@@ -92,9 +92,9 @@ std::istream& operator>>(std::istream& is, DataBaseQuery& q) {
 
 	is >> q.request;
 
-	Requests request_type = q.request.getMethod();
+	Methods request_type = q.request.getMethod();
 
-	switch (request_type) {
+	switch (request_type.request) {
 		case POST: parsePost(q.request.getBody(), q); break;
 		case PUT:  parsePut(q.request.getUri(), q.request.getBody(), q); break;
 		case GET:  parseGetandDelete(q.request.getUri(), q); break;
