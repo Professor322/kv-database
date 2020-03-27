@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../CommonFiles/http_request_parser.h"
 #include <boost/asio.hpp>
+#include "../CommonFiles/http_request_parser.h"
 
 using namespace boost::asio;
 
@@ -27,7 +27,6 @@ int main(int argc, char* argv[])
 			s.connect(ep);
 
 			http_request_parser request(std::cin);
-			std::cout << request.to_String() << std::endl;
 
 			boost::asio::write(s, boost::asio::buffer(request.to_String(), request.to_String().size()));
 
