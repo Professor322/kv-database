@@ -22,8 +22,8 @@ add_executable(client DataBaseClient/main.cpp
         CommonFiles/http_request_parser.cpp)
 
 target_link_libraries(server
-        ~/Desktop/kv-database/libs/jsoncpplib/libjsoncpp.a
-        ~/Desktop/kv-database/libs/boost_system/libboost_system.a)
+        ~/kv-database/libs/jsoncpplib/libjsoncpp.a
+        ~/kv-database/libs/boost_system/libboost_system.a)
 
 target_link_libraries(client
-        ~/Desktop/kv-database/libs/boost_system/libboost_system.a)
+        ~/kv-database/libs/boost_system/libboost_system.a)
