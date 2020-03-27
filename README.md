@@ -4,7 +4,7 @@
 Необходимый минимум: **g++, libboost-all-dev, cmake, make**
 
 Для установки необходимых покетов на Ubuntu воспользуйтесь командой:
-- **sudo apt-get install g++ libboost-all-dev, cmake, make**
+- **sudo apt-get install g++ libboost-all-dev cmake make**
 
 Для того, чтобы скомпилировать клиент и сервер необходимо:
 
