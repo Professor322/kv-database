@@ -57,7 +57,7 @@ void server(boost::asio::io_service& io_service, unsigned short port)
 	{
 		socket_ptr sock(new ip::tcp::socket(io_service));
 		a.accept(*sock);
-		boost::thread t(boost::bind(session, sock));
+		session(sock);
 	}
 }
 
