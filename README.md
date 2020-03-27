@@ -41,4 +41,4 @@ PUT | Code: 200 | Code: 400 | - | - | Code:404
 GET | Code 200 Body: key: "key" value: {JSON}| - | - | Code: 404 
 DELETE | Code 200 | - | - | Code: 404 
 
-Для выхода из клиента и из сервера используется **Ctrl + C
+Для выхода из клиента и из сервера используется **Ctrl + C**
