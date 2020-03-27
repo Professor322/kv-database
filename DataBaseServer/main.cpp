@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 		switch (argc) {
 			case 1: server(io_service, DEFAULT_ADDRESS, DEFAULT_PORT); break;
 			case 2: server(io_service, argv[1], DEFAULT_PORT); break;
-			case 3: server(io_service, argv[1], atoi(argv[2]));
+			case 3: server(io_service, argv[1], atoi(argv[2])); break;
 			default: throw std::runtime_error("Invalid args");
 		}
 	}

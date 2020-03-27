@@ -1,0 +1,2 @@
+GET kv/{test}
+POST kv/  {key: "test", "value": {"key" : "value"}}
