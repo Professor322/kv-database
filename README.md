@@ -1,5 +1,4 @@
 # kv-database
-C/C++ Database client/server 
 
 Работоспосбность клиента и сервера проверена на Ubuntu 18.04
 Необходимый минимум: **g++, cmake, make
