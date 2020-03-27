@@ -26,4 +26,4 @@ target_link_libraries(server
         ~/Desktop/kv-database/libs/boost_system/libboost_system.a)
 
 target_link_libraries(client
-        ~/Desktop/kv-database/boost_system/libboost_system.a)
+        ~/Desktop/kv-database/libs/boost_system/libboost_system.a)
