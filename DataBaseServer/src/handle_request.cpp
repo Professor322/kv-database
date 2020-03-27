@@ -3,7 +3,6 @@
 //
 
 #include "../include/data_base.h"
-#include <iostream>
 
 static std::string create_response(const std::string &what) {
 	http_response_parser response;
@@ -33,7 +32,6 @@ std::string handle_request(const std::string& request) {
 		ss >> q;
 
 		Requests req = q.request.getMethod().request;
-		std::cout << q.key << " " << q.value << std::endl;
 		switch (req) {
 			case POST: db.addElem(q.key, q.value); break;
 			case PUT: db.changeElem(q.key, q.value); break;

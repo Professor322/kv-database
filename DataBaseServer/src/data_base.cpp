@@ -2,13 +2,9 @@
 // Created by professor on 26.03.20.
 //
 #include "../include/data_base.h"
-#include <iostream>
 
 DataBase::DataBase(const std::string& log_filename) {
 	this->log.open(log_filename, std::ios_base::out | std::ios_base::in | std::ios_base::app);
-	if (this->log.is_open()) {
-		std::cout << "Log file is opened" << std::endl;
-	}
 }
 
 DataBase::~DataBase() {

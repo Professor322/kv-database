@@ -12,7 +12,14 @@ int main(int argc, char* argv[])
 		boost::asio::io_service io_service;
 
 
-		ip::tcp::endpoint ep(ip::address::from_string("127.0.0.1"), 8001);
+		ip::tcp::endpoint ep;
+
+		switch (argc) {
+			case 1: ep.address(ip::address::from_string(DEFAULT_ADDRESS)); ep.port(DEFAULT_PORT); break;
+			case 2: ep.address(ip::address::from_string(argv[1])); ep.port(DEFAULT_PORT); break;
+			case 3: ep.address(ip::address::from_string(argv[1])); ep.port(atoi(argv[2])); break;
+			default: throw std::runtime_error("Wrong args");
+		}
 
 		for (;;) {
 			ip::tcp::socket s(io_service);

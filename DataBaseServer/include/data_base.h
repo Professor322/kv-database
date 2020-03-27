@@ -19,12 +19,12 @@ private:
 	std::unordered_map<std::string, Json::Value> db;
 	std::fstream log;
 public:
-	explicit DataBase(const std::string& log_filename);
-	void addElem(const std::string& key, const Json::Value& val);
-	void changeElem(const std::string& key, const Json::Value& val);
+	explicit	DataBase(const std::string& log_filename);
+	void		addElem(const std::string& key, const Json::Value& val);
+	void		changeElem(const std::string& key, const Json::Value& val);
 	std::string getElem(const std::string& key) const;
-	void deleteElem(const std::string& key);
-	void logCommand(const std::string& command, const std::string& arg);
+	void		deleteElem(const std::string& key);
+	void		logCommand(const std::string& command, const std::string& arg);
 	~DataBase();
 
 };

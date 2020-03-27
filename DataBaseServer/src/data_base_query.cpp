@@ -3,7 +3,6 @@
 //
 #include "../include/data_base.h"
 #include "../include/data_base_query.h"
-#include <iostream>
 
 static bool getRegex(const std::string& to_parse, std::smatch& match,const char *expression) {
 	if (to_parse.empty()) {

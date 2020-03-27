@@ -8,7 +8,11 @@
 #include <sstream>
 #include <fstream>
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 	1024
+#define DEFAULT_ADDRESS "127.0.0.1"
+#define DEFAULT_PORT	8001
+
+
 
 enum Requests {
 	POST,
@@ -35,14 +39,15 @@ public:
 	http_request_parser(std::istream& is);
 	http_request_parser(const Requests& method);
 	http_request_parser(const Requests& method, const std::string& uri);
-	void setMethod(const Methods& method);
-	Methods getMethod() const;
-	void setUri(const std::string& uri);
-	void setBody(const std::string& body);
-	std::string getBody() const;
-	std::string getUri() const;
 	http_request_parser(const Requests& method, const std::string& uri, const std::string& body);
-	std::string to_String() const;
+
+	void 				setMethod(const Methods& method);
+	Methods 			getMethod() const;
+	void 				setUri(const std::string& uri);
+	void 				setBody(const std::string& body);
+	std::string 		getBody() const;
+	std::string 		getUri() const;
+	std::string 		to_String() const;
 	~http_request_parser() {}
 };
 

@@ -21,5 +21,5 @@ struct DataBaseQuery {
 	Json::Value value;
 };
 
-std::istream& operator>>(std::istream& is, DataBaseQuery& q);
-std::string handle_request(const std::string& request);
+std::istream& 	operator>>(std::istream& is, DataBaseQuery& q);
+std::string 	handle_request(const std::string& request);

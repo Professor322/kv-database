@@ -50,9 +50,9 @@ void session(socket_ptr sock)
 	}
 }
 
-void server(boost::asio::io_service& io_service, unsigned short port)
+void server(boost::asio::io_service& io_service, const std::string& address, unsigned short port)
 {
-	ip::tcp::acceptor a(io_service, ip::tcp::endpoint(ip::address::from_string("127.0.0.1"), port));
+	ip::tcp::acceptor a(io_service, ip::tcp::endpoint(ip::address::from_string(address), port));
 	for (;;)
 	{
 		socket_ptr sock(new ip::tcp::socket(io_service));
@@ -67,7 +67,12 @@ int main(int argc, char* argv[])
 	{
 
 		boost::asio::io_service io_service;
-		server(io_service, 8001);
+		switch (argc) {
+			case 1: server(io_service, DEFAULT_ADDRESS, DEFAULT_PORT); break;
+			case 2: server(io_service, argv[1], DEFAULT_PORT); break;
+			case 3: server(io_service, argv[1], atoi(argv[2]));
+			default: throw std::runtime_error("Invalid args");
+		}
 	}
 	catch (std::exception& e)
 	{
