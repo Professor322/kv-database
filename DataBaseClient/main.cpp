@@ -26,8 +26,7 @@ int main(int argc, char* argv[])
 
 			char reply[BUFFER_SIZE];
 
-			boost::system::error_code error;
-			size_t reply_length = s.read_some(boost::asio::buffer(reply), error);
+			size_t reply_length = s.read_some(boost::asio::buffer(reply));
 			std::string response(reply, reply_length);
 			std::cout << response << std::endl;
 
